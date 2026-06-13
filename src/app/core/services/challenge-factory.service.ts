@@ -1,3 +1,5 @@
+import { Injectable } from "@angular/core";
+
 interface ImagePool {
   name: string;
   question: string;
@@ -67,3 +69,21 @@ const IMAGE_POOLS:  ImagePool[] = [
     ],
   }
 ];
+
+@Injectable({ providedIn: 'root' })
+export class ChallengeFactoryService {
+
+
+  // Helpers
+  private pickRandom<T>(arr: T[]): T {
+    return arr[Math.floor(Math.random() * arr.length)];
+  }
+
+  private rand(min: number, max: number) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  private shuffle<T>(arr: T[]): T[] {
+    return [...arr].sort(() => Math.random() - 0.5);
+  }
+}
