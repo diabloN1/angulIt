@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -7,5 +8,11 @@ import { Component } from '@angular/core';
   styleUrl: 'home.css',
 })
 export class HomeComponent {
-  startSession(): void {}
+  private router = inject(Router);
+
+  hasExistingSession = signal(false);
+
+  startSession(): void {
+    this.router.navigate(['/captcha']);
+  }
 }

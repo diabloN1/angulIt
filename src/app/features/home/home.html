@@ -1,4 +1,4 @@
-    <div class="home-wrapper" @fadeIn>
+    <div class="home-wrapper">
       <div class="hero-glow"></div>
       <div class="hero-card glass">
         <div class="logo-ring">
@@ -16,23 +16,23 @@
           <span class="badge">🔤 Text Input</span>
         </div>
 
-        <!-- @if (hasExistingSession) {
+        @if (hasExistingSession()) {
           <div class="session-alert">
             <span>⚡ You have an ongoing session</span>
           </div>
           <div class="cta-row">
-            <button id="btn-continue" class="btn btn-primary" (click)="continueSession()">
+            <button id="btn-continue" class="btn btn-primary">
               Continue Session →
             </button>
-            <button id="btn-restart" class="btn btn-ghost" (click)="startFresh()">
+            <button id="btn-restart" class="btn btn-ghost">
               Start Fresh
             </button>
           </div>
-        } @else { -->
+        } @else {
           <button id="btn-start" class="btn btn-primary btn-large" (click)="startSession()">
             Start Challenge
           </button>
-        <!-- } -->
+        }
 
         <p class="footer-note">Your progress is automatically saved</p>
       </div>
