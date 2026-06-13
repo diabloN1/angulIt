@@ -71,6 +71,13 @@ const IMAGE_POOLS: ImagePool[] = [
   },
 ];
 
+const TEXT_CHALLENGES = [
+  { target: 'ANGULAR' },
+  { target: 'CAPTCHA' },
+  { target: 'SECURE42' },
+  { target: 'VERIFY7X' },
+];
+
 @Injectable({ providedIn: 'root' })
 export class ChallengeFactoryService {
   private imageChallengeBuilder(id: number): Challenge {
@@ -130,13 +137,24 @@ export class ChallengeFactoryService {
       if (v !== correct && v >= 0) wrong.add(v);
     }
 
-    const options = this.shuffle([correct, ...Array.from(wrong)]);
+    const mathOptions = this.shuffle([correct, ...Array.from(wrong)]);
 
     return {
       id,
       type: 'math',
       question,
-      mathOptions: options,
+      mathOptions,
+    };
+  }
+
+  private textChallengeBuilder(id: number): Challenge {
+    const text = this.pickRandom(TEXT_CHALLENGES);
+
+    return {
+      id: id++,
+      type: 'text-input',
+      question: 'Type the characters you see below exactly as shown:',
+      textTarget: text.target,
     };
   }
 
