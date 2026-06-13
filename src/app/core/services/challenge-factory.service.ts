@@ -80,6 +80,19 @@ const TEXT_CHALLENGES = [
 
 @Injectable({ providedIn: 'root' })
 export class ChallengeFactoryService {
+
+  build(): Challenge[] {
+    const challenges: Challenge[] = [];
+    let id = 0;
+
+    challenges.push(this.imageChallengeBuilder(id++));
+    challenges.push(this.mathChallengeBuilder(id++));
+    challenges.push(this.textChallengeBuilder(id++));
+    
+    return challenges;
+  }
+
+  // Challenge Builder
   private imageChallengeBuilder(id: number): Challenge {
     const pool = this.pickRandom(IMAGE_POOLS);
 
