@@ -1,0 +1,36 @@
+<div class="text-challenge">
+  <p class="challenge-instruction">{{ challenge().question }}</p>
+
+  <div class="distorted-text" aria-label="Text to type" role="img">
+    @for (char of chars; track $index) {
+      <span class="char" [style]="getCharStyle($index)">{{ char }}</span>
+    }
+  </div>
+
+  <div class="noise-bar"></div>
+
+  <div class="input-wrapper">
+    <input
+      id="text-captcha-input"
+      type="text"
+      autocomplete="off"
+      autocorrect="off"
+      autocapitalize="characters"
+      spellcheck="false"
+      class="captcha-input"
+      [class.input-error]="showError() && control.invalid"
+      [formControl]="control"
+      [attr.aria-invalid]="showError() && control.invalid"
+      aria-describedby="text-error"
+      placeholder="Type the text above…"
+      (input)="onInput()"
+    />
+    <span class="input-icon">{{ control.valid && control.value ? '✓' : '✎' }}</span>
+  </div>
+
+  @if (showError() && control.invalid) {
+    <p class="error-msg" role="alert" id="text-error">
+      ⚠ Text doesn't match. Check capitalization and try again.
+    </p>
+  }
+</div>

@@ -1,0 +1,101 @@
+.text-challenge {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.challenge-instruction {
+  font-size: 1rem;
+  color: var(--clr-text-muted);
+  margin: 0;
+}
+.distorted-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  padding: 28px 20px;
+  background: linear-gradient(135deg, var(--clr-surface-2), var(--clr-surface-3));
+  border-radius: 16px;
+  border: 1px solid var(--clr-border);
+  user-select: none;
+  position: relative;
+  overflow: hidden;
+}
+.distorted-text::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 8px,
+    rgba(255, 255, 255, 0.015) 8px,
+    rgba(255, 255, 255, 0.015) 10px
+  );
+}
+.char {
+  font-size: 2.4rem;
+  font-weight: 900;
+  font-family: 'Courier New', monospace;
+  position: relative;
+  display: inline-block;
+  text-shadow:
+    2px 2px 0 rgba(124, 58, 237, 0.3),
+    -1px -1px 0 rgba(6, 182, 212, 0.2);
+}
+.noise-bar {
+  height: 4px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--clr-primary) 0px,
+    var(--clr-primary) 4px,
+    var(--clr-accent) 4px,
+    var(--clr-accent) 8px,
+    transparent 8px,
+    transparent 14px
+  );
+  border-radius: 99px;
+  opacity: 0.4;
+}
+.input-wrapper {
+  position: relative;
+}
+.captcha-input {
+  width: 100%;
+  padding: 14px 48px 14px 18px;
+  border-radius: 14px;
+  border: 2px solid var(--clr-border);
+  background: var(--clr-surface-2);
+  color: var(--clr-text);
+  font-size: 1.1rem;
+  font-weight: 600;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 0.15em;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+  outline: none;
+}
+.captcha-input:focus {
+  border-color: var(--clr-primary);
+}
+.captcha-input.input-error {
+  border-color: var(--clr-error);
+}
+.input-icon {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.2rem;
+  color: var(--clr-text-muted);
+  pointer-events: none;
+}
+.error-msg {
+  color: var(--clr-error);
+  font-size: 0.87rem;
+  margin: 0;
+  padding: 10px 14px;
+  background: rgba(239, 68, 68, 0.1);
+  border-radius: 10px;
+  border: 1px solid rgba(239, 68, 68, 0.25);
+}
