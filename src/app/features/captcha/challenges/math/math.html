@@ -1,0 +1,25 @@
+<div class="math-challenge">
+  <p class="challenge-instruction">Solve the equation below:</p>
+  <div class="equation-display" aria-live="polite">{{ challenge().question }}</div>
+
+  <div class="options-grid" role="radiogroup" aria-label="Answer choices">
+    @for (option of challenge().mathOptions; track option) {
+      <button
+        type="button"
+        class="option-btn"
+        [class.selected]="selectedAnswer === option"
+        [attr.aria-pressed]="selectedAnswer === option"
+        [id]="'math-opt-' + option"
+        (click)="selectOption(option)"
+      >
+        {{ option }}
+      </button>
+    }
+  </div>
+
+  @if (showError()) {
+    <p class="error-msg" role="alert" id="math-error">
+      ⚠ Please select an answer before continuing.
+    </p>
+  }
+</div>
