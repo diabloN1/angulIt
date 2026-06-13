@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Challenge, ImageOption } from '../models/challenge';
 
 interface ImagePool {
   name: string;
@@ -73,7 +74,7 @@ const IMAGE_POOLS: ImagePool[] = [
 @Injectable({ providedIn: 'root' })
 export class ChallengeFactoryService {
   
-  private imageChallengeBuilder(): any {
+  private imageChallengeBuilder(id: number): Challenge {
     const pool = this.pickRandom(IMAGE_POOLS);
 
     const correctCount = this.rand(2, 4);
@@ -83,13 +84,15 @@ export class ChallengeFactoryService {
 
     const all = this.shuffle([...correct, ...wrong]);
 
-    const imageOptions = all.map((src, i) => ({
+    const imageOptions: ImageOption[] = all.map((src, i) => ({
+      id: i,
       label: `image ${i}`,
       src,
       isTarget: correct.includes(src),
     }));
 
     return {
+      id,
       type: 'image-select',
       question: pool.question,
       imageOptions,
