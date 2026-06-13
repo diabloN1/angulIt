@@ -1,0 +1,34 @@
+<div class="image-challenge">
+  <p class="challenge-instruction" [innerHTML]="challenge().question"></p>
+
+  <div class="image-grid" role="group" aria-label="Image selection grid">
+    @for (option of challenge().imageOptions; track option.id) {
+      <button
+        type="button"
+        class="image-cell"
+        [class.selected]="isSelected(option.id)"
+        [attr.aria-pressed]="isSelected(option.id)"
+        [attr.aria-label]="option.label + (isSelected(option.id) ? ' selected' : '')"
+        [id]="'img-cell-' + option.id"
+        (click)="toggleImage(option.id)"
+      >
+        <div class="cell-overlay-wrapper">
+          <img
+            [src]="option.src"
+            [alt]="option.label"
+            class="cell-img"
+          />
+          <div class="cell-overlay">
+            <span class="check-icon">✓</span>
+          </div>
+        </div>
+      </button>
+    }
+  </div>
+
+  @if (showError()) {
+    <p class="error-msg" role="alert" id="img-error">
+      ⚠ Please select <em>all</em> correct images before continuing.
+    </p>
+  }
+</div>

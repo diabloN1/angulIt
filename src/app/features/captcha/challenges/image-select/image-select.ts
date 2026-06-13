@@ -13,5 +13,15 @@ export class ImageSelectComponent {
 
   selectedIds: number[] = [];
 
-  
+  toggleImage(id: number): void {
+    const idx = this.selectedIds.indexOf(id);
+    this.selectedIds =
+      idx === -1 ? [...this.selectedIds, id] : this.selectedIds.filter((i) => i !== id);
+    this.answerChange.emit(this.selectedIds);
+  }
+
+  isSelected(id: number): boolean {
+    return this.selectedIds.includes(id);
+  }
 }
+
