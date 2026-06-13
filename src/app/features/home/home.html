@@ -1,0 +1,39 @@
+    <div class="home-wrapper" @fadeIn>
+      <div class="hero-glow"></div>
+      <div class="hero-card glass">
+        <div class="logo-ring">
+          <span class="logo-icon">🛡️</span>
+        </div>
+        <h1 class="hero-title">Angul-<span class="gradient-text">It</span></h1>
+        <p class="hero-subtitle">
+          Prove you're human with our intelligent multi-stage CAPTCHA challenge.
+          Select images, solve math, and verify text — all in one session.
+        </p>
+
+        <div class="badge-row">
+          <span class="badge">🖼️ Image Select</span>
+          <span class="badge">🔢 Math</span>
+          <span class="badge">🔤 Text Input</span>
+        </div>
+
+        <!-- @if (hasExistingSession) {
+          <div class="session-alert">
+            <span>⚡ You have an ongoing session</span>
+          </div>
+          <div class="cta-row">
+            <button id="btn-continue" class="btn btn-primary" (click)="continueSession()">
+              Continue Session →
+            </button>
+            <button id="btn-restart" class="btn btn-ghost" (click)="startFresh()">
+              Start Fresh
+            </button>
+          </div>
+        } @else { -->
+          <button id="btn-start" class="btn btn-primary btn-large" (click)="startSession()">
+            Start Challenge
+          </button>
+        <!-- } -->
+
+        <p class="footer-note">Your progress is automatically saved</p>
+      </div>
+    </div>
