@@ -1,4 +1,11 @@
-const IMAGE_POOLS:  any[] = [
+interface ImagePool {
+  name: string;
+  question: string;
+  correctSrcs: string[];
+  otherSrcs: string[];
+}
+
+const IMAGE_POOLS:  ImagePool[] = [
   {
     name: 'cats',
     question: 'Select all images that contain a <strong>cat</strong>.',
