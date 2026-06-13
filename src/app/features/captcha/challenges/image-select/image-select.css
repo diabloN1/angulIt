@@ -1,0 +1,79 @@
+.image-challenge {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.challenge-instruction {
+  font-size: 1rem;
+  color: var(--clr-text);
+  margin: 0;
+  font-weight: 500;
+}
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  border-radius: 16px;
+  overflow: hidden;
+}
+.image-cell {
+  position: relative;
+  aspect-ratio: 1;
+  padding: 0;
+  border: 3px solid transparent;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  background: none;
+  transition:
+    border-color 0.2s,
+    transform 0.15s;
+}
+.image-cell:hover {
+  transform: scale(1.03);
+  border-color: var(--clr-primary);
+}
+.image-cell.selected {
+  border-color: var(--clr-accent);
+}
+.cell-overlay-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.cell-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  /* Show the correct slice of the composite image */
+  object-position: var(--pos, center);
+}
+.cell-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(6, 182, 212, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.image-cell.selected .cell-overlay {
+  opacity: 1;
+}
+.check-icon {
+  font-size: 1.8rem;
+  color: #fff;
+  font-weight: 800;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+.error-msg {
+  color: var(--clr-error);
+  font-size: 0.87rem;
+  margin: 0;
+  padding: 10px 14px;
+  background: rgba(239, 68, 68, 0.1);
+  border-radius: 10px;
+  border: 1px solid rgba(239, 68, 68, 0.25);
+}
