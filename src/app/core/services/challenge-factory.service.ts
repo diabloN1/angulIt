@@ -73,7 +73,6 @@ const IMAGE_POOLS: ImagePool[] = [
 
 @Injectable({ providedIn: 'root' })
 export class ChallengeFactoryService {
-  
   private imageChallengeBuilder(id: number): Challenge {
     const pool = this.pickRandom(IMAGE_POOLS);
 
@@ -96,7 +95,49 @@ export class ChallengeFactoryService {
       type: 'image-select',
       question: pool.question,
       imageOptions,
+    };
+  }
+
+  private mathChallengeBuilder(id: number): Challenge {
+    const ops = ['+', '-', '*'];
+    const op = this.pickRandom(ops);
+
+    let a = this.rand(2, 12);
+    let b = this.rand(2, 12);
+    let correct: number;
+    let question: string;
+
+    switch (op) {
+      case '+':
+        correct = a + b;
+        question = `${a} + ${b} = ?`;
+        break;
+      case '-':
+        if (a < b) [a, b] = [b, a];
+        correct = a - b;
+        question = `${a} − ${b} = ?`;
+        break;
+      default:
+        a = this.rand(2, 9);
+        b = this.rand(2, 9);
+        correct = a * b;
+        question = `${a} × ${b} = ?`;
     }
+
+    const wrong = new Set<number>();
+    while (wrong.size < 3) {
+      const v = correct + this.rand(-5, 5);
+      if (v !== correct && v >= 0) wrong.add(v);
+    }
+
+    const options = this.shuffle([correct, ...Array.from(wrong)]);
+
+    return {
+      id,
+      type: 'math',
+      question,
+      mathOptions: options,
+    };
   }
 
   // Helpers
