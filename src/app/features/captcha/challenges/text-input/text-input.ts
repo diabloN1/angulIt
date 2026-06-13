@@ -16,6 +16,17 @@ export class TextInputComponent implements OnInit {
   control = new FormControl('');
 
   chars: string[] = [];
+  private readonly rotations = this.shuffle([-8, 6, -4, 10, -6, 4, -10, 8]);
+  private readonly colors = this.shuffle([
+    'var(--clr-text)',
+    'var(--clr-primary-light)',
+    'var(--clr-accent)',
+    'var(--clr-text)',
+    'var(--clr-primary-light)',
+    'var(--clr-text)',
+    'var(--clr-accent)',
+    'var(--clr-text)',
+  ]);
 
   ngOnInit(): void {
     this.chars = this.challenge().textTarget!.split('');
@@ -26,20 +37,8 @@ export class TextInputComponent implements OnInit {
   }
 
   getCharStyle(index: number): string {
-    const rotations = this.shuffle([-8, 6, -4, 10, -6, 4, -10, 8]);
-    const colors = this.shuffle([
-      'var(--clr-text)',
-      'var(--clr-primary-light)',
-      'var(--clr-accent)',
-      'var(--clr-text)',
-      'var(--clr-primary-light)',
-      'var(--clr-text)',
-      'var(--clr-accent)',
-      'var(--clr-text)',
-    ]);
-
-    const rot = rotations[index % rotations.length];
-    const color = colors[index % colors.length];
+    const rot = this.rotations[index % this.rotations.length];
+    const color = this.colors[index % this.colors.length];
     const offset = ((index % 3) - 1) * 3;
     return `transform: rotate(${rot}deg) translateY(${offset}px); color: ${color};`;
   }
