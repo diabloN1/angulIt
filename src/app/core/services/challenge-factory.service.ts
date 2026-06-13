@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 
 interface ImagePool {
   name: string;
@@ -7,7 +7,7 @@ interface ImagePool {
   otherSrcs: string[];
 }
 
-const IMAGE_POOLS:  ImagePool[] = [
+const IMAGE_POOLS: ImagePool[] = [
   {
     name: 'cats',
     question: 'Select all images that contain a <strong>cat</strong>.',
@@ -67,12 +67,34 @@ const IMAGE_POOLS:  ImagePool[] = [
       'assets/images/cats/cat3.png',
       'assets/images/cats/cat4.png',
     ],
-  }
+  },
 ];
 
 @Injectable({ providedIn: 'root' })
 export class ChallengeFactoryService {
+  
+  private imageChallengeBuilder(): any {
+    const pool = this.pickRandom(IMAGE_POOLS);
 
+    const correctCount = this.rand(2, 4);
+    const correct = this.shuffle(pool.correctSrcs).slice(0, correctCount);
+
+    const wrong = this.shuffle(pool.otherSrcs).slice(0, 9 - correctCount);
+
+    const all = this.shuffle([...correct, ...wrong]);
+
+    const imageOptions = all.map((src, i) => ({
+      label: `image ${i}`,
+      src,
+      isTarget: correct.includes(src),
+    }));
+
+    return {
+      type: 'image-select',
+      question: pool.question,
+      imageOptions,
+    }
+  }
 
   // Helpers
   private pickRandom<T>(arr: T[]): T {
