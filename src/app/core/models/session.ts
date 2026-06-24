@@ -4,5 +4,4 @@ export interface SessionState {
   challenges: Challenge[];
   currentIndex: number;
   completed: boolean;
-  startedAt: string;
 }

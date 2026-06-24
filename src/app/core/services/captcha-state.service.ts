@@ -4,7 +4,7 @@ import { ChallengeFactoryService } from './challenge-factory.service';
 
 @Injectable({ providedIn: 'root' })
 export class CaptchaStateService {
-    private readonly STORAGE_KEY = 'angulIt_session';
+  private readonly STORAGE_KEY = 'angulIt_session';
 
   private readonly _session = signal<SessionState | null>(this.load());
 
@@ -17,16 +17,32 @@ export class CaptchaStateService {
   readonly hasSession = computed(() => this._session() !== null);
 
   private readonly factory = inject(ChallengeFactoryService);
-  
 
-    private load(): SessionState | null {
-      try {
-        const raw = localStorage.getItem(this.STORAGE_KEY);
-        return raw ? (JSON.parse(raw) as SessionState) : null;
-      } catch {
-        console.error('Failed to load session from localStorage');
-        return null;
-      }
+  startSession(): void {
+    const state: SessionState = {
+      challenges: this.factory.build(),
+      currentIndex: 0,
+      completed: false,
+    };
+    this.save(state);
+  }
+
+  private save(state: SessionState): void {
+    this._session.set(state);
+    try {
+      localStorage.setItem(this.STORAGE_KEY, JSON.stringify(state));
+    } catch {
+      console.error('Failed to save session to localStorage');
     }
-}
+  }
 
+  private load(): SessionState | null {
+    try {
+      const raw = localStorage.getItem(this.STORAGE_KEY);
+      return raw ? (JSON.parse(raw) as SessionState) : null;
+    } catch {
+      console.error('Failed to load session from localStorage');
+      return null;
+    }
+  }
+}
