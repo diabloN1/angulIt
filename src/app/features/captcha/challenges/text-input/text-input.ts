@@ -14,8 +14,9 @@ export class TextInputComponent implements OnInit {
   answerChange = output<string>();
 
   control = new FormControl('');
-
+  
   chars: string[] = [];
+  
   private readonly rotations = this.shuffle([-8, 6, -4, 10, -6, 4, -10, 8]);
   private readonly colors = this.shuffle([
     'var(--clr-text)',
