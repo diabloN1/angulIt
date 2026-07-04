@@ -1,0 +1,20 @@
+<div class="nav-row">
+  <button
+    id="btn-prev"
+    class="btn btn-ghost"
+    (click)="prev.emit()"
+    [disabled]="!canGoBack"
+    aria-label="Previous challenge"
+  >
+    ← Back
+  </button>
+  <button
+    id="btn-next"
+    class="btn btn-primary"
+    (click)="next.emit()"
+    [disabled]="!canGoNext"
+    [attr.aria-label]="isLast ? 'Finish challenge' : 'Next challenge'"
+  >
+    {{ isLast ? 'Finish ✓' : 'Next →' }}
+  </button>
+</div>

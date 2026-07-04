@@ -6,12 +6,14 @@ import { ImageSelectComponent } from './challenges/image-select/image-select';
 import { MathChallengeComponent } from './challenges/math/math';
 import { TextInputComponent } from './challenges/text-input/text-input';
 import { ProgressBarComponent } from '../../shared/components/progress-bar/progress-bar';
+import { StageNavComponent } from '../../shared/components/progress-bar/stage-nav/stage-nav';
 
 @Component({
   selector: 'app-captcha',
   standalone: true,
   imports: [
     CommonModule,
+    StageNavComponent,
     ProgressBarComponent,
     ImageSelectComponent,
     MathChallengeComponent,

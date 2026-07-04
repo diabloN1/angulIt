@@ -14,7 +14,7 @@
     <!-- Progress -->
     <app-progress-bar [current]="state.currentIndex()" [total]="state.totalChallenges()"/>
 
-    <!-- Challenge content — animated slide -->
+    <!-- Challenge content -->
     <div class="challenge-container">
       @if (state.currentChallenge(); as challenge) {
         @switch (challenge.type) {
@@ -47,13 +47,13 @@
     </div>
 
     <!-- Navigation -->
-    <!-- <app-stage-nav
+    <app-stage-nav
       [canGoBack]="state.currentIndex() > 0"
       [canGoNext]="hasAnswer()"
       [isLast]="isLast()"
       (prev)="onPrev()"
       (next)="onNext()"
-    > -->
-    <!-- </app-stage-nav> -->
+    >
+    </app-stage-nav>
   </div>
 </div>
