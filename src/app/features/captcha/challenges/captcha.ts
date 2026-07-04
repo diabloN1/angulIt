@@ -29,5 +29,39 @@ export class CaptchaComponent {
     return answer !== null && answer !== undefined;
   });
 
-  
+  readonly isLast = computed(() =>
+    this.state.currentIndex() === this.state.totalChallenges() - 1
+  );
+
+  onAnswer(answer: string | number | number[]): void {
+    this._currentAnswer.set(answer);
+    this.showError.set(false);
+  }
+
+  onPrev(): void {
+    this._currentAnswer.set(null);
+    this.showError.set(false);
+    this.state.goToIndex(this.state.currentIndex() - 1);
+  }
+
+  onNext(): void {
+    const answer = this._currentAnswer() ?? this.state.currentChallenge()?.userAnswer;
+    if (answer === undefined || answer === null ||
+        (Array.isArray(answer) && (answer as number[]).length === 0) ||
+        (typeof answer === 'string' && !(answer as string).trim())) {
+      this.showError.set(true);
+      return;
+    }
+
+    this.state.submitAnswer(answer!);
+    this._currentAnswer.set(null);
+    this.showError.set(false);
+
+    if (this.isLast()) {
+      this.state.completeSession();
+      this.router.navigate(['/result']);
+    } else {
+      this.state.advanceIndex();
+    }
+  }
 }
