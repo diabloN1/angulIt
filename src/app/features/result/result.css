@@ -1,0 +1,213 @@
+.result-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+}
+/* Confetti */
+.confetti-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+.confetti-piece {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  animation: confetti-fall linear infinite;
+}
+@keyframes confetti-fall {
+  0% {
+    transform: translateY(-20px) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(110vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+.result-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 580px;
+  padding: 44px 48px;
+  border-radius: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+.score-section {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+.score-ring {
+  flex-shrink: 0;
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  background: var(--clr-surface-2);
+  border: 4px solid var(--clr-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  font-size: 1.4rem;
+  font-weight: 800;
+  transition: border-color 0.5s;
+}
+.score-ring.perfect {
+  border-color: var(--clr-accent);
+  box-shadow: 0 0 30px rgba(6, 182, 212, 0.3);
+}
+.score-num {
+  color: var(--clr-accent);
+}
+.score-sep {
+  color: var(--clr-text-muted);
+  font-weight: 400;
+}
+.score-den {
+  color: var(--clr-text-muted);
+}
+.score-text {
+  flex: 1;
+}
+.result-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin: 0 0 6px;
+}
+.result-subtitle {
+  margin: 0;
+  color: var(--clr-text-muted);
+  font-size: 0.95rem;
+}
+.breakdown-title {
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0 0 12px;
+  color: var(--clr-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.8rem;
+}
+.breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.breakdown-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  border-radius: 14px;
+  border: 1px solid var(--clr-border);
+  background: var(--clr-surface-2);
+  transition: transform 0.2s;
+}
+.breakdown-item:hover {
+  transform: translateX(4px);
+}
+.breakdown-item.correct {
+  border-color: rgba(6, 182, 212, 0.3);
+}
+.breakdown-item.wrong {
+  border-color: rgba(239, 68, 68, 0.25);
+}
+.item-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+.correct .item-icon {
+  background: rgba(6, 182, 212, 0.15);
+  color: var(--clr-accent);
+}
+.wrong .item-icon {
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--clr-error);
+}
+.item-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.item-type {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--clr-text-muted);
+}
+.item-question {
+  font-size: 0.9rem;
+  color: var(--clr-text);
+}
+.item-status {
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.correct .item-status {
+  color: var(--clr-accent);
+}
+.wrong .item-status {
+  color: var(--clr-error);
+}
+.action-row {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.btn {
+  padding: 14px 28px;
+  border-radius: 14px;
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  border: none;
+  text-align: center;
+}
+.btn-primary {
+  background: linear-gradient(135deg, var(--clr-primary), var(--clr-accent));
+  color: #fff;
+  box-shadow: 0 4px 24px rgba(124, 58, 237, 0.4);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(124, 58, 237, 0.5);
+}
+.btn-ghost {
+  background: transparent;
+  border: 2px solid var(--clr-surface-2);
+  color: var(--clr-text-muted);
+}
+.btn-ghost:hover {
+  border-color: var(--clr-primary);
+  color: var(--clr-primary);
+}
+@media (max-width: 600px) {
+  .result-card {
+    padding: 28px 20px;
+  }
+  .score-section {
+    flex-direction: column;
+    text-align: center;
+  }
+}

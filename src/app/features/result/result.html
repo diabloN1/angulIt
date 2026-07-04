@@ -1,0 +1,53 @@
+<div class="result-wrapper">
+  <!-- Confetti particles -->
+  @if (isPerfect()) {
+    <div class="confetti-container" aria-hidden="true">
+      @for (p of confettiParticles; track $index) {
+        <div class="confetti-piece" [style]="p"></div>
+      }
+    </div>
+  }
+
+  <div class="result-card glass">
+    <!-- Score header -->
+    <div class="score-section">
+      <div class="score-ring" [class.perfect]="isPerfect()">
+        <span class="score-num">{{ correctCount() }}</span>
+        <span class="score-sep">/</span>
+        <span class="score-den">{{ totalCount() }}</span>
+      </div>
+      <div class="score-text">
+        <h1 class="result-title">
+          {{
+            isPerfect() ? '🎉 Perfect Score!' : score() >= 0.75 ? '✅ Well Done!' : '🔄 Try Again'
+          }}
+        </h1>
+        <p class="result-subtitle">
+          You answered <strong>{{ correctCount() }}</strong> of
+          <strong>{{ totalCount() }}</strong> challenges correctly.
+        </p>
+      </div>
+    </div>
+
+    <!-- Challenge breakdown -->
+    <div class="breakdown">
+      <h2 class="breakdown-title">Challenge Breakdown</h2>
+      @for (c of challenges(); track c.id) {
+        <div class="breakdown-item" [class.correct]="c.isCorrect" [class.wrong]="!c.isCorrect">
+          <div class="item-icon">{{ c.isCorrect ? '✓' : '✗' }}</div>
+          <div class="item-info">
+            <span class="item-type">{{ typeLabel(c) }}</span>
+            <span class="item-question" [innerHTML]="c.question"></span>
+          </div>
+          <div class="item-status">{{ c.isCorrect ? 'Correct' : 'Incorrect' }}</div>
+        </div>
+      }
+    </div>
+
+    <!-- Actions -->
+    <div class="action-row">
+      <button id="btn-restart" class="btn btn-primary" (click)="restart()">🔄 New Challenge</button>
+      <button id="btn-home" class="btn btn-ghost" (click)="goHome()">← Back to Home</button>
+    </div>
+  </div>
+</div>
