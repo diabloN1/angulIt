@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { captchaGuard } from './core/guards/captcha.guard';
+import { resultGuard } from './core/guards/result.guard';
 
 export const routes: Routes = [
   {
@@ -17,6 +18,7 @@ export const routes: Routes = [
   {
     path: 'result',
     loadComponent: () => import('./features/result/result').then((m) => m.ResultComponent),
+    canActivate: [resultGuard],
     title: 'Angul-It — Your Results',
   },
   {
