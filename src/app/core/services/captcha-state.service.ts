@@ -27,6 +27,11 @@ export class CaptchaStateService {
     this.save(state);
   }
 
+  resetSession(): void {
+    localStorage.removeItem(this.STORAGE_KEY);
+    this._session.set(null);
+  }
+
   private save(state: SessionState): void {
     this._session.set(state);
     try {

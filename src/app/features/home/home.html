@@ -21,10 +21,10 @@
             <span>⚡ You have an ongoing session</span>
           </div>
           <div class="cta-row">
-            <button id="btn-continue" class="btn btn-primary">
+            <button id="btn-continue" class="btn btn-primary" (click)="continueSession()">
               Continue Session →
             </button>
-            <button id="btn-restart" class="btn btn-ghost">
+            <button id="btn-restart" class="btn btn-ghost" (click)="startFresh()">
               Start Fresh
             </button>
           </div>
@@ -33,7 +33,6 @@
             Start Challenge
           </button>
         }
-
         <p class="footer-note">Your progress is automatically saved</p>
       </div>
     </div>
