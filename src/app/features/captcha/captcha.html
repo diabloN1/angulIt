@@ -12,11 +12,10 @@
     </div>
 
     <!-- Progress -->
-    <!-- <app-progress-bar [current]="state.currentIndex()" [total]="state.totalChallenges()"> -->
-    <!-- </app-progress-bar> -->
+    <app-progress-bar [current]="state.currentIndex()" [total]="state.totalChallenges()"/>
 
     <!-- Challenge content — animated slide -->
-    <div class="challenge-container" [@slideIn]="state.currentIndex()">
+    <div class="challenge-container">
       @if (state.currentChallenge(); as challenge) {
         @switch (challenge.type) {
           @case ('image-select') {

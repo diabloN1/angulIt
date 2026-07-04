@@ -5,12 +5,14 @@ import { CaptchaStateService } from '../../core/services/captcha-state.service';
 import { ImageSelectComponent } from './challenges/image-select/image-select';
 import { MathChallengeComponent } from './challenges/math/math';
 import { TextInputComponent } from './challenges/text-input/text-input';
+import { ProgressBarComponent } from '../../shared/components/progress-bar/progress-bar';
 
 @Component({
   selector: 'app-captcha',
   standalone: true,
   imports: [
     CommonModule,
+    ProgressBarComponent,
     ImageSelectComponent,
     MathChallengeComponent,
     TextInputComponent,

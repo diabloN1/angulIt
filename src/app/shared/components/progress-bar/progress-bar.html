@@ -1,0 +1,13 @@
+<div
+  class="progress-wrapper"
+  role="progressbar"
+  [attr.aria-valuenow]="current + 1"
+  [attr.aria-valuemin]="1"
+  [attr.aria-valuemax]="total"
+  [attr.aria-label]="'Challenge ' + (current + 1) + ' of ' + total"
+>
+  <div class="progress-track">
+    <div class="progress-fill" [style.width.%]="fillPercent"></div>
+  </div>
+  <span class="progress-label">{{ current + 1 }} / {{ total }}</span>
+</div>
