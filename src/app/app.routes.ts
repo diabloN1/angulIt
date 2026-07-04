@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { captchaGuard } from './core/guards/captcha.guard';
 
 export const routes: Routes = [
   {
@@ -9,6 +10,7 @@ export const routes: Routes = [
   {
     path: 'captcha',
     loadComponent: () => import('./features/captcha/captcha').then((m) => m.CaptchaComponent),
+    canActivate: [captchaGuard],
     title: 'Angul-It — Solve the Challenge',
   },
 
