@@ -6,7 +6,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
   selector: 'app-text-input',
   templateUrl: 'text-input.html',
   imports: [ReactiveFormsModule],
-  styleUrl: 'text-input.html',
+  styleUrl: 'text-input.css',
 })
 export class TextInputComponent implements OnInit {
   challenge = input.required<Challenge>();
