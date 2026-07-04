@@ -27,9 +27,33 @@ export class CaptchaStateService {
     this.save(state);
   }
 
+  completeSession(): void {
+    const state = this._session();
+    if (!state) return;
+    this.save({ ...state, completed: true });
+  }
+
   resetSession(): void {
     localStorage.removeItem(this.STORAGE_KEY);
     this._session.set(null);
+  }
+
+  goToIndex(index: number): void {
+    const state = this._session();
+    if (!state) return;
+    if (index < 0 || index >= state.challenges.length) return;
+    this.save({ ...state, currentIndex: index });
+  }
+
+  advanceIndex(): void {
+    const state = this._session();
+    if (!state) return;
+    const next = state.currentIndex + 1;
+    if (next >= state.challenges.length) {
+      this.completeSession();
+    } else {
+      this.save({ ...state, currentIndex: next });
+    }
   }
 
   private save(state: SessionState): void {
