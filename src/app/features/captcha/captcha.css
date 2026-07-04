@@ -1,0 +1,53 @@
+.captcha-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.captcha-card {
+  width: 100%;
+  max-width: 560px;
+  padding: 36px 40px;
+  border-radius: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.1rem;
+  color: var(--clr-text);
+}
+.brand-icon {
+  font-size: 1.3rem;
+}
+.brand-name strong {
+  color: var(--clr-primary-light);
+}
+.stage-badge {
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 99px;
+  background: var(--clr-surface-2);
+  border: 1px solid var(--clr-border);
+  color: var(--clr-text-muted);
+}
+.challenge-container {
+  min-height: 340px;
+  display: flex;
+  flex-direction: column;
+}
+@media (max-width: 600px) {
+  .captcha-card {
+    padding: 24px 20px;
+  }
+}

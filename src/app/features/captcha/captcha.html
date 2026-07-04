@@ -1,0 +1,60 @@
+<div class="captcha-wrapper">
+  <div class="captcha-card glass">
+    <!-- Header -->
+    <div class="card-header">
+      <div class="brand">
+        <span class="brand-icon">🛡️</span>
+        <span class="brand-name">Angul-<strong>It</strong></span>
+      </div>
+      <div class="stage-badge">
+        Stage {{ state.currentIndex() + 1 }} of {{ state.totalChallenges() }}
+      </div>
+    </div>
+
+    <!-- Progress -->
+    <!-- <app-progress-bar [current]="state.currentIndex()" [total]="state.totalChallenges()"> -->
+    <!-- </app-progress-bar> -->
+
+    <!-- Challenge content — animated slide -->
+    <div class="challenge-container" [@slideIn]="state.currentIndex()">
+      @if (state.currentChallenge(); as challenge) {
+        @switch (challenge.type) {
+          @case ('image-select') {
+            <app-image-select
+              [challenge]="challenge"
+              [showError]="showError()"
+              (answerChange)="onAnswer($event)"
+            >
+            </app-image-select>
+          }
+          @case ('math') {
+            <app-math-challenge
+              [challenge]="challenge"
+              [showError]="showError()"
+              (answerChange)="onAnswer($event)"
+            >
+            </app-math-challenge>
+          }
+          @case ('text-input') {
+            <app-text-input
+              [challenge]="challenge"
+              [showError]="showError()"
+              (answerChange)="onAnswer($event)"
+            >
+            </app-text-input>
+          }
+        }
+      }
+    </div>
+
+    <!-- Navigation -->
+    <!-- <app-stage-nav
+      [canGoBack]="state.currentIndex() > 0"
+      [canGoNext]="hasAnswer()"
+      [isLast]="isLast()"
+      (prev)="onPrev()"
+      (next)="onNext()"
+    > -->
+    <!-- </app-stage-nav> -->
+  </div>
+</div>

@@ -1,13 +1,19 @@
 import { Component, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { CaptchaStateService } from '../../../core/services/captcha-state.service';
+import { CaptchaStateService } from '../../core/services/captcha-state.service';
+import { ImageSelectComponent } from './challenges/image-select/image-select';
+import { MathChallengeComponent } from './challenges/math/math';
+import { TextInputComponent } from './challenges/text-input/text-input';
 
 @Component({
   selector: 'app-captcha',
   standalone: true,
   imports: [
     CommonModule,
+    ImageSelectComponent,
+    MathChallengeComponent,
+    TextInputComponent,
   ],
   templateUrl: 'captcha.html',
   styleUrl: 'captcha.css',
@@ -29,9 +35,7 @@ export class CaptchaComponent {
     return answer !== null && answer !== undefined;
   });
 
-  readonly isLast = computed(() =>
-    this.state.currentIndex() === this.state.totalChallenges() - 1
-  );
+  readonly isLast = computed(() => this.state.currentIndex() === this.state.totalChallenges() - 1);
 
   onAnswer(answer: string | number | number[]): void {
     this._currentAnswer.set(answer);
@@ -46,9 +50,12 @@ export class CaptchaComponent {
 
   onNext(): void {
     const answer = this._currentAnswer() ?? this.state.currentChallenge()?.userAnswer;
-    if (answer === undefined || answer === null ||
-        (Array.isArray(answer) && (answer as number[]).length === 0) ||
-        (typeof answer === 'string' && !(answer as string).trim())) {
+    if (
+      answer === undefined ||
+      answer === null ||
+      (Array.isArray(answer) && (answer as number[]).length === 0) ||
+      (typeof answer === 'string' && !(answer as string).trim())
+    ) {
       this.showError.set(true);
       return;
     }
