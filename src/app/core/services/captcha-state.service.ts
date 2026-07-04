@@ -1,6 +1,7 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { SessionState } from '../models/session';
 import { ChallengeFactoryService } from './challenge-factory.service';
+import { Challenge } from '../models/challenge';
 
 @Injectable({ providedIn: 'root' })
 export class CaptchaStateService {
@@ -18,6 +19,7 @@ export class CaptchaStateService {
 
   private readonly factory = inject(ChallengeFactoryService);
 
+  // Session state management
   startSession(): void {
     const state: SessionState = {
       challenges: this.factory.build(),
@@ -38,6 +40,7 @@ export class CaptchaStateService {
     this._session.set(null);
   }
 
+  // challenge pagination
   goToIndex(index: number): void {
     const state = this._session();
     if (!state) return;
@@ -56,6 +59,7 @@ export class CaptchaStateService {
     }
   }
 
+  // Session storage management
   private save(state: SessionState): void {
     this._session.set(state);
     try {
@@ -72,6 +76,53 @@ export class CaptchaStateService {
     } catch {
       console.error('Failed to load session from localStorage');
       return null;
+    }
+  }
+
+  // Answers evaluation
+  submitAnswer(answer: string | number | number[]): boolean {
+    const state = this._session();
+    if (!state) return false;
+
+    const index = state.currentIndex;
+    const challenge = state.challenges[index];
+    const isCorrect = this.evaluate(challenge, answer);
+
+    const updated: SessionState = {
+      ...state,
+      challenges: state.challenges.map((c, i) =>
+        i === index ? { ...c, userAnswer: answer, isCorrect } : c,
+      ),
+    };
+    this.save(updated);
+    return isCorrect;
+  }
+
+  private evaluate(challenge: Challenge, answer: string | number | number[]): boolean {
+    switch (challenge.type) {
+      case 'image-select': {
+        const selected = answer as number[];
+        const targets = challenge.imageOptions!.filter((o) => o.isTarget).map((o) => o.id);
+        return targets.length === selected.length && targets.every((id) => selected.includes(id));
+      }
+      case 'math': {
+        const raw = challenge.question;
+        let correct: number;
+        if (raw.includes('+')) {
+          const [a, b] = raw.replace(' = ?', '').split(' + ').map(Number);
+          correct = a + b;
+        } else if (raw.includes('−')) {
+          const [a, b] = raw.replace(' = ?', '').split(' − ').map(Number);
+          correct = a - b;
+        } else {
+          const [a, b] = raw.replace(' = ?', '').split(' × ').map(Number);
+          correct = a * b;
+        }
+        return (answer as number) === correct;
+      }
+      case 'text-input': {
+        return (answer as string).trim().toUpperCase() === challenge.textTarget!.toUpperCase();
+      }
     }
   }
 }
