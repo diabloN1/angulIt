@@ -9,6 +9,7 @@ import { Challenge } from '../../../../core/models/challenge';
 export class MathChallengeComponent {
   challenge = input.required<Challenge>();
   showError = input(false);
+  showInvalid = input(false);
   answerChange = output<number>();
 
   selectedAnswer: number | null = null;

@@ -3,7 +3,7 @@
   <div class="equation-display" aria-live="polite">{{ challenge().question }}</div>
 
   <div class="options-grid" role="radiogroup" aria-label="Answer choices">
-    @for (option of challenge().mathOptions; track option) {
+    @for (option of challenge().mathOptions; track $index) {
       <button
         type="button"
         class="option-btn"
@@ -20,6 +20,12 @@
   @if (showError()) {
     <p class="error-msg" role="alert" id="math-error">
       ⚠ Please select an answer before continuing.
+    </p>
+  }
+
+  @if (showInvalid()) {
+    <p class="error-msg" role="alert" id="img-error">
+      ⚠ Invalid answer! please try again.
     </p>
   }
 </div>
