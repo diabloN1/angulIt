@@ -6,8 +6,8 @@
       <button
         type="button"
         class="image-cell"
-        [class.selected]="selectedIds().includes(option.id)"
-        [attr.aria-pressed]="selectedIds().includes(option.id)"
+        [class.selected]="isSelected(option.id)"
+        [attr.aria-pressed]="isSelected(option.id)"
         [attr.aria-label]="option.label + (isSelected(option.id) ? ' selected' : '')"
         [id]="'img-cell-' + option.id"
         (click)="toggleImage(option.id)"
