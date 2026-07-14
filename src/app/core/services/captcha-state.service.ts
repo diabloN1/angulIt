@@ -88,14 +88,25 @@ export class CaptchaStateService {
     const challenge = state.challenges[index];
     const isCorrect = this.evaluate(challenge, answer);
 
+    if (isCorrect) {
+      this.updateSession(answer);
+    } else {
+      this.refreshCurrent();
+    }
+
+    return isCorrect;
+  }
+
+  updateSession(answer: string | number | number[]) {
+    const state = this._session();
+    if (!state) return;
+
+    const index = state.currentIndex;
     const updated: SessionState = {
       ...state,
-      challenges: state.challenges.map((c, i) =>
-        i === index ? { ...c, userAnswer: answer, isCorrect } : c,
-      ),
+      challenges: state.challenges.map((c, i) => (i === index ? { ...c, userAnswer: answer } : c)),
     };
     this.save(updated);
-    return isCorrect;
   }
 
   private evaluate(challenge: Challenge, answer: string | number | number[]): boolean {
@@ -124,5 +135,36 @@ export class CaptchaStateService {
         return (answer as string).trim().toUpperCase() === challenge.textTarget!.toUpperCase();
       }
     }
+  }
+
+  private refreshCurrent(): void {
+    const state = this._session();
+    if (!state) return;
+
+    const index = state.currentIndex;
+    const current = state.challenges[index];
+
+    let refreshed: Challenge;
+
+    switch (current.type) {
+      case 'image-select':
+        refreshed = this.factory.imageChallengeBuilder(index);
+        break;
+
+      case 'math':
+        refreshed = this.factory.mathChallengeBuilder(index);
+        break;
+
+      case 'text-input':
+        refreshed = this.factory.textChallengeBuilder(index);
+        break;
+    }
+
+    const updated: SessionState = {
+      ...state,
+      challenges: state.challenges.map((challenge, i) => (i === index ? refreshed : challenge)),
+    };
+
+    this.save(updated);
   }
 }

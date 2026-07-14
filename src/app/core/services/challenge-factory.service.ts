@@ -93,7 +93,7 @@ export class ChallengeFactoryService {
   }
 
   // Challenge Builder
-  private imageChallengeBuilder(id: number): Challenge {
+  imageChallengeBuilder(id: number): Challenge {
     const pool = this.pickRandom(IMAGE_POOLS);
 
     const correctCount = this.rand(2, 4);
@@ -118,7 +118,7 @@ export class ChallengeFactoryService {
     };
   }
 
-  private mathChallengeBuilder(id: number): Challenge {
+  mathChallengeBuilder(id: number): Challenge {
     const ops = ['+', '-', '*'];
     const op = this.pickRandom(ops);
 
@@ -160,7 +160,7 @@ export class ChallengeFactoryService {
     };
   }
 
-  private textChallengeBuilder(id: number): Challenge {
+  textChallengeBuilder(id: number): Challenge {
     const text = this.pickRandom(TEXT_CHALLENGES);
 
     return {

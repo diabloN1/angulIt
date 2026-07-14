@@ -17,6 +17,5 @@ export interface Challenge {
   mathOptions?: number[];
   // text-input
   textTarget?: string;
-  userAnswer?: string | number | number[]; // text | math choice | image ids[]
-  isCorrect?: boolean;
+  userAnswer?: string | number | number[];
 }
