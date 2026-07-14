@@ -28,6 +28,7 @@ export class CaptchaComponent {
 
   private _currentAnswer = signal<string | number | number[] | null>(null);
   readonly showError = signal(false);
+  readonly showInvalid = signal(false);
 
   readonly hasAnswer = computed(() => {
     const answer = this._currentAnswer();
@@ -43,7 +44,9 @@ export class CaptchaComponent {
 
   onAnswer(answer: string | number | number[]): void {
     this._currentAnswer.set(answer);
+    this.state.updateSession(answer);
     this.showError.set(false);
+    this.showInvalid.set(false);
   }
 
   onPrev(): void {
@@ -64,7 +67,11 @@ export class CaptchaComponent {
       return;
     }
 
-    this.state.submitAnswer(answer!);
+    if (!this.state.submitAnswer(answer)) {
+      this.showInvalid.set(true);
+      return;
+    }
+    
     this._currentAnswer.set(null);
     this.showError.set(false);
 
