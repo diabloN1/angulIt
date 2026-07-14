@@ -1,2 +1,6 @@
 [] - can't go to next challenge until validating the current one
 [] - how data should be stored ?
+
+
+refresh keep value in math challenge
+refresh + bad challenge change challenge in lastchallenge

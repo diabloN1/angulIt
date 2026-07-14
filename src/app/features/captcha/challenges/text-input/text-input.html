@@ -33,4 +33,8 @@
       ⚠ Text doesn't match. Check capitalization and try again.
     </p>
   }
+
+  @if (showInvalid()) {
+    <p class="error-msg" role="alert" id="img-error">⚠ Invalid answer! please try again.</p>
+  }
 </div>

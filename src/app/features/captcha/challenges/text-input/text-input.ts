@@ -11,6 +11,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 export class TextInputComponent implements OnInit {
   challenge = input.required<Challenge>();
   showError = input<boolean>(false);
+  showInvalid = input<boolean>(false);
   answerChange = output<string>();
 
   control = new FormControl('');
