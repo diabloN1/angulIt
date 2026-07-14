@@ -6,18 +6,14 @@
       <button
         type="button"
         class="image-cell"
-        [class.selected]="isSelected(option.id)"
-        [attr.aria-pressed]="isSelected(option.id)"
+        [class.selected]="selectedIds().includes(option.id)"
+        [attr.aria-pressed]="selectedIds().includes(option.id)"
         [attr.aria-label]="option.label + (isSelected(option.id) ? ' selected' : '')"
         [id]="'img-cell-' + option.id"
         (click)="toggleImage(option.id)"
       >
         <div class="cell-overlay-wrapper">
-          <img
-            [src]="option.src"
-            [alt]="option.label"
-            class="cell-img"
-          />
+          <img [src]="option.src" [alt]="option.label" class="cell-img" />
           <div class="cell-overlay">
             <span class="check-icon">✓</span>
           </div>
@@ -29,6 +25,12 @@
   @if (showError()) {
     <p class="error-msg" role="alert" id="img-error">
       ⚠ Please select <em>all</em> correct images before continuing.
+    </p>
+  }
+
+  @if (showInvalid()) {
+    <p class="error-msg" role="alert" id="img-error">
+      ⚠ Invalid images selection! please try again.
     </p>
   }
 </div>
