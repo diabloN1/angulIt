@@ -44,7 +44,7 @@ export class CaptchaComponent {
 
   onAnswer(answer: string | number | number[]): void {
     this._currentAnswer.set(answer);
-    this.state.updateSession(answer);
+    this.state.saveAnswer(answer);
     this.showError.set(false);
     this.showInvalid.set(false);
   }

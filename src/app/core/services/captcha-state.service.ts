@@ -72,6 +72,18 @@ export class CaptchaStateService {
   }
 
   // Session storage management
+  saveAnswer(answer: string | number | number[]) {
+    const state = this._session();
+    if (!state) return;
+
+    const index = state.currentIndex;
+    const updated: SessionState = {
+      ...state,
+      challenges: state.challenges.map((c, i) => (i === index ? { ...c, userAnswer: answer } : c)),
+    };
+    this.save(updated);
+  }
+
   private save(state: SessionState): void {
     this._session.set(state);
     const encrypted = CryptoJS.AES.encrypt(JSON.stringify(state), this.ENCRYPTION_KEY).toString();
@@ -108,24 +120,12 @@ export class CaptchaStateService {
     const isCorrect = this.evaluate(challenge, answer);
 
     if (isCorrect) {
-      this.updateSession(answer);
+      this.saveAnswer(answer);
     } else {
-      this.refreshCurrent();
+      this.rebuildCurrent();
     }
 
     return isCorrect;
-  }
-
-  updateSession(answer: string | number | number[]) {
-    const state = this._session();
-    if (!state) return;
-
-    const index = state.currentIndex;
-    const updated: SessionState = {
-      ...state,
-      challenges: state.challenges.map((c, i) => (i === index ? { ...c, userAnswer: answer } : c)),
-    };
-    this.save(updated);
   }
 
   private evaluate(challenge: Challenge, answer: string | number | number[]): boolean {
@@ -156,7 +156,7 @@ export class CaptchaStateService {
     }
   }
 
-  private refreshCurrent(): void {
+  private rebuildCurrent(): void {
     const state = this._session();
     if (!state) return;
 
