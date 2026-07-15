@@ -30,7 +30,7 @@ export class CaptchaStateService {
       }
     });
   }
-  
+
   // Session state management
   startSession(): void {
     const state: SessionState = {
@@ -88,9 +88,10 @@ export class CaptchaStateService {
     try {
       const raw = localStorage.getItem(this.STORAGE_KEY);
       if (!raw) return null;
-      const state = CryptoJS.AES.decrypt(raw, this.ENCRYPTION_KEY).toString();
 
-      return JSON.parse(state) as SessionState;
+      const decrypted = CryptoJS.AES.decrypt(raw, this.ENCRYPTION_KEY).toString(CryptoJS.enc.Utf8);
+
+      return JSON.parse(decrypted) as SessionState;
     } catch {
       console.error('Failed to load session from localStorage');
       return null;
