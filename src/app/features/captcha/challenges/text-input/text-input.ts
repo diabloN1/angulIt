@@ -1,4 +1,4 @@
-import { Component, input, OnInit, output } from '@angular/core';
+import { Component, computed, effect, input, OnInit, output } from '@angular/core';
 import { Challenge } from '../../../../core/models/challenge';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
@@ -8,16 +8,16 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
   imports: [ReactiveFormsModule],
   styleUrl: 'text-input.css',
 })
-export class TextInputComponent implements OnInit {
+export class TextInputComponent {
   challenge = input.required<Challenge>();
   showError = input<boolean>(false);
   showInvalid = input<boolean>(false);
   answerChange = output<string>();
 
   control = new FormControl('');
-  
-  chars: string[] = [];
-  
+
+  chars = computed(() => this.challenge().textTarget!.split(''));
+
   private readonly rotations = this.shuffle([-8, 6, -4, 10, -6, 4, -10, 8]);
   private readonly colors = this.shuffle([
     'var(--clr-text)',
@@ -30,8 +30,13 @@ export class TextInputComponent implements OnInit {
     'var(--clr-text)',
   ]);
 
-  ngOnInit(): void {
-    this.chars = this.challenge().textTarget!.split('');
+  constructor() {
+    effect(() => {
+      const isInvalid = this.showInvalid();
+      if (isInvalid) {
+        this.control.setValue('');
+      }
+    });
   }
 
   onInput(): void {

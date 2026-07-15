@@ -2,7 +2,7 @@
   <p class="challenge-instruction">{{ challenge().question }}</p>
 
   <div class="distorted-text" aria-label="Text to type" role="img">
-    @for (char of chars; track $index) {
+    @for (char of chars(); track $index) {
       <span class="char" [style]="getCharStyle($index)">{{ char }}</span>
     }
   </div>
