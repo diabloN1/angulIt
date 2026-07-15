@@ -2,10 +2,12 @@ import { computed, inject, Injectable, signal } from '@angular/core';
 import { SessionState } from '../models/session';
 import { ChallengeFactoryService } from './challenge-factory.service';
 import { Challenge } from '../models/challenge';
+import CryptoJS from 'crypto-js';
 
 @Injectable({ providedIn: 'root' })
 export class CaptchaStateService {
   private readonly STORAGE_KEY = 'angulIt_session';
+  private readonly ENCRYPTION_KEY = 'x7R#9mP!2QvL@8kN$5cZ&wE1tYuIoP4a';
 
   private readonly _session = signal<SessionState | null>(this.load());
 
@@ -19,6 +21,16 @@ export class CaptchaStateService {
 
   private readonly factory = inject(ChallengeFactoryService);
 
+  private lastEncryptedState = '';
+
+  constructor() {
+    window.addEventListener('storage', (event) => {
+      if (event.key === this.STORAGE_KEY) {
+        localStorage.setItem(this.STORAGE_KEY, this.lastEncryptedState);
+      }
+    });
+  }
+  
   // Session state management
   startSession(): void {
     const state: SessionState = {
@@ -62,8 +74,11 @@ export class CaptchaStateService {
   // Session storage management
   private save(state: SessionState): void {
     this._session.set(state);
+    const encrypted = CryptoJS.AES.encrypt(JSON.stringify(state), this.ENCRYPTION_KEY).toString();
+    this.lastEncryptedState = encrypted;
+
     try {
-      localStorage.setItem(this.STORAGE_KEY, JSON.stringify(state));
+      localStorage.setItem(this.STORAGE_KEY, encrypted);
     } catch {
       console.error('Failed to save session to localStorage');
     }
@@ -72,7 +87,10 @@ export class CaptchaStateService {
   private load(): SessionState | null {
     try {
       const raw = localStorage.getItem(this.STORAGE_KEY);
-      return raw ? (JSON.parse(raw) as SessionState) : null;
+      if (!raw) return null;
+      const state = CryptoJS.AES.decrypt(raw, this.ENCRYPTION_KEY).toString();
+
+      return JSON.parse(state) as SessionState;
     } catch {
       console.error('Failed to load session from localStorage');
       return null;
