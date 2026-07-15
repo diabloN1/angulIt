@@ -18,11 +18,12 @@ export class MathChallengeComponent implements OnInit {
     const storedAnswer = this.challenge().userAnswer;
 
     if (storedAnswer && typeof storedAnswer === 'number') {
-      this.selectOption(storedAnswer);
+      this.selectedAnswer = storedAnswer;
     }
   }
 
   selectOption(value: number): void {
+    if (this.challenge().completed) return;
     this.selectedAnswer = value;
     this.answerChange.emit(value);
   }

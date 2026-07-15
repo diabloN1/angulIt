@@ -32,6 +32,7 @@ export class ImageSelectComponent implements OnInit {
   }
 
   toggleImage(id: number): void {
+    if (this.challenge().completed) return;
     const idx = this.selectedIds().indexOf(id);
     this.selectedIds.update((old) => (idx === -1 ? [...old, id] : old.filter((i) => i !== id)));
     this.answerChange.emit(this.selectedIds());

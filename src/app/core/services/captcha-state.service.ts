@@ -72,14 +72,14 @@ export class CaptchaStateService {
   }
 
   // Session storage management
-  saveAnswer(answer: string | number | number[]) {
+  saveAnswer(answer: string | number | number[], completed: boolean = false) {
     const state = this._session();
     if (!state) return;
 
     const index = state.currentIndex;
     const updated: SessionState = {
       ...state,
-      challenges: state.challenges.map((c, i) => (i === index ? { ...c, userAnswer: answer } : c)),
+      challenges: state.challenges.map((c, i) => (i === index ? { ...c, userAnswer: answer, completed } : c)),
     };
     this.save(updated);
   }
@@ -103,6 +103,7 @@ export class CaptchaStateService {
 
       const decrypted = CryptoJS.AES.decrypt(raw, this.ENCRYPTION_KEY).toString(CryptoJS.enc.Utf8);
 
+      console.log('wiiiiiiiw', JSON.parse(decrypted))
       return JSON.parse(decrypted) as SessionState;
     } catch {
       console.error('Failed to load session from localStorage');
@@ -120,7 +121,7 @@ export class CaptchaStateService {
     const isCorrect = this.evaluate(challenge, answer);
 
     if (isCorrect) {
-      this.saveAnswer(answer);
+      this.saveAnswer(answer, true);
     } else {
       this.rebuildCurrent();
     }

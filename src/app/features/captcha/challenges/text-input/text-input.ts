@@ -47,6 +47,7 @@ export class TextInputComponent implements OnInit {
   }
 
   onInput(): void {
+    if (this.challenge().completed) return;
     this.answerChange.emit(this.control.value ?? '');
   }
 

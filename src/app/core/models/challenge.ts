@@ -18,4 +18,5 @@ export interface Challenge {
   // text-input
   textTarget?: string;
   userAnswer?: string | number | number[];
+  completed?: boolean;
 }

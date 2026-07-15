@@ -52,6 +52,7 @@ export class CaptchaComponent {
   onPrev(): void {
     this._currentAnswer.set(null);
     this.showError.set(false);
+    this.showInvalid.set(false);
     this.state.goToIndex(this.state.currentIndex() - 1);
   }
 
@@ -74,6 +75,7 @@ export class CaptchaComponent {
     
     this._currentAnswer.set(null);
     this.showError.set(false);
+    this.showInvalid.set(false);
 
     if (this.isLast()) {
       this.state.completeSession();
