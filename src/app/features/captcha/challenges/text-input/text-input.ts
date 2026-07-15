@@ -8,7 +8,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
   imports: [ReactiveFormsModule],
   styleUrl: 'text-input.css',
 })
-export class TextInputComponent {
+export class TextInputComponent implements OnInit {
   challenge = input.required<Challenge>();
   showError = input<boolean>(false);
   showInvalid = input<boolean>(false);
@@ -37,6 +37,13 @@ export class TextInputComponent {
         this.control.setValue('');
       }
     });
+  }
+
+  ngOnInit(): void {
+    const storedAnswer = this.challenge().userAnswer;
+    if (typeof storedAnswer == 'string') {
+      this.control.setValue(storedAnswer);
+    }
   }
 
   onInput(): void {
