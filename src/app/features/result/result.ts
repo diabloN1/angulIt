@@ -17,23 +17,16 @@ export class ResultComponent implements OnInit {
 
   readonly challenges = this.stateService.challenges;
 
-  readonly correctCount = () => this.challenges().filter(c => c.isCorrect).length;
-  readonly totalCount = () => this.challenges().length;
-  readonly score = () => this.correctCount() / this.totalCount();
-  readonly isPerfect = () => this.correctCount() === this.totalCount();
-
   confettiParticles: string[] = [];
 
   ngOnInit(): void {
-    if (this.isPerfect()) {
-      this.generateConfetti();
-    }
+    this.generateConfetti();
   }
 
   typeLabel(c: Challenge): string {
     const map: Record<string, string> = {
       'image-select': '🖼️ Image Select',
-      'math': '🔢 Math',
+      math: '🔢 Math',
       'text-input': '🔤 Text Input',
     };
     return map[c.type] ?? c.type;
