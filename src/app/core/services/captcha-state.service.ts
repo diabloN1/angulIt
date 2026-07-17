@@ -103,7 +103,6 @@ export class CaptchaStateService {
 
       const decrypted = CryptoJS.AES.decrypt(raw, this.ENCRYPTION_KEY).toString(CryptoJS.enc.Utf8);
 
-      console.log('wiiiiiiiw', JSON.parse(decrypted))
       return JSON.parse(decrypted) as SessionState;
     } catch {
       console.error('Failed to load session from localStorage');
